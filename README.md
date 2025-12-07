@@ -190,23 +190,87 @@ Leader key: `<Space>`
 │       └── dashboard.lua    # Custom dashboard
 ```
 
-## Adding Language Support
+## C# / .NET Support
 
-Use `:Mason` to install LSP servers, formatters, and linters.
+This configuration includes full C# development support with the same tools VS Code uses.
 
-Example for C#:
-```lua
--- lua/plugins/csharp.lua
-return {
-  {
-    "seblyng/roslyn.nvim",
-    ft = "cs",
-    opts = {},
-  },
-}
+### Requirements
+
+- **.NET SDK** (tested with .NET 10)
+
+```bash
+dotnet --version
 ```
 
-Then run `:Roslyn install` inside Neovim.
+### What's Included
+
+| Feature | Tool | Description |
+|---------|------|-------------|
+| LSP | **Roslyn** | Same language server as VS Code |
+| Syntax | **Treesitter** | Accurate syntax highlighting |
+| Debugger | **netcoredbg** | Breakpoints, step through, variables |
+
+### Post-Install Setup
+
+After cloning this config, run these commands inside Neovim:
+
+```
+:Mason
+```
+
+Then install:
+1. Search `roslyn` → press `i` to install
+2. Search `netcoredbg` → press `i` to install
+
+### C# Keymaps
+
+#### LSP (works in any `.cs` file)
+| Key | Action |
+|-----|--------|
+| `gd` | Go to definition |
+| `gr` | Find all references |
+| `K` | Hover documentation |
+| `<leader>cr` | Rename symbol |
+| `<leader>ca` | Code actions |
+
+#### Debugger
+| Key | Action |
+|-----|--------|
+| `<leader>db` | Toggle breakpoint |
+| `<leader>dc` | Start/continue debugging |
+| `<leader>di` | Step into |
+| `<leader>do` | Step over |
+| `<leader>dO` | Step out |
+| `<leader>dt` | Terminate debug session |
+| `<leader>du` | Toggle debug UI |
+
+### Debugging a Project
+
+1. Build your project:
+   ```bash
+   dotnet build
+   ```
+
+2. Open a `.cs` file in Neovim
+
+3. Set a breakpoint with `<leader>db`
+
+4. Start debugging with `<leader>dc`
+
+5. Enter the path to your DLL:
+   ```
+   bin/Debug/net10.0/YourProject.dll
+   ```
+
+### Why Roslyn over OmniSharp?
+
+- **Official**: Same LSP that powers VS Code and Visual Studio
+- **Modern**: Better support for latest C# features and .NET versions
+- **Maintained**: Microsoft actively develops Roslyn
+
+## Adding Other Languages
+
+Use `:Mason` to install LSP servers, formatters, and linters for other languages.
 
 ## License
 
