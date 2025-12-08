@@ -190,23 +190,63 @@ Leader key: `<Space>`
 │       └── dashboard.lua    # Custom dashboard
 ```
 
-## Adding Language Support
+## Cloud / DevOps Support
 
-Use `:Mason` to install LSP servers, formatters, and linters.
+This configuration includes support for cloud infrastructure and DevOps workflows.
 
-Example for C#:
-```lua
--- lua/plugins/csharp.lua
-return {
-  {
-    "seblyng/roslyn.nvim",
-    ft = "cs",
-    opts = {},
-  },
+### What's Included
+
+| Tool | LSP/Plugin | Description |
+|------|------------|-------------|
+| Docker | `dockerfile-ls` | Dockerfile support |
+| Docker Compose | `docker-compose-language-service` | docker-compose.yml support |
+| Azure Bicep | `bicep-lsp` | Azure Infrastructure as Code |
+| Terraform | `terraform-ls` | HashiCorp Terraform |
+| YAML | `yaml-language-server` + SchemaStore | Auto-validation for pipelines, k8s, etc. |
+| JSON | `json-lsp` + SchemaStore | Auto-validation with schemas |
+| REST APIs | `kulala.nvim` | Test APIs from Neovim |
+
+### Automatic Schema Detection
+
+SchemaStore automatically validates:
+- `azure-pipelines.yml`
+- `docker-compose.yml`
+- `.github/workflows/*.yml` (GitHub Actions)
+- `package.json`, `tsconfig.json`
+- And hundreds more...
+
+### REST Client Keymaps
+
+| Key | Action |
+|-----|--------|
+| `<leader>rs` | Run REST request |
+| `<leader>ra` | Run all requests |
+| `<leader>rn` | Next request |
+| `<leader>rp` | Previous request |
+
+### Using the REST Client
+
+Create a `.http` file:
+
+```http
+### Get users
+GET https://jsonplaceholder.typicode.com/users
+
+### Create user
+POST https://jsonplaceholder.typicode.com/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com"
 }
 ```
 
-Then run `:Roslyn install` inside Neovim.
+Press `<leader>rs` on a request to execute it.
+
+## Adding Language Support
+
+Use `:Mason` to install LSP servers, formatters, and linters.
 
 ## License
 
